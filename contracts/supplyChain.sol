@@ -37,6 +37,8 @@ contract supplyChain {
 
     mapping(uint32 => uint32[]) public productTrack;
 
+    event Transfer(uint32 productId);
+
     function createParticipant(string _name, string _pass, address _pAdd, string _pType) public returns (uint32) {
         uint32 userId = uid++;
         participants[userId].userName = _name;
