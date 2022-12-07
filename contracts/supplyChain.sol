@@ -87,6 +87,7 @@ contract supplyChain {
         registrations[registration_id].trxTimeStamp = uint32(now);
         products[_prodId].productOwner = p2.participantAddress;
         productTrack[_prodId].push(registration_id);
+        emit Transfer(_prodId);
 
         return (true);
     }

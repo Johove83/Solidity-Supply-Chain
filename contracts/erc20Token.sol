@@ -29,6 +29,7 @@ contract Aphelion is ERC20Interface {
         require(balances[msg.sender] >= _value, "Insufficient funds.");
         balances[msg.sender] -= _value;
         balances[_to] += _value;
+        emit Transfer(msg.sender, _to, _value);
         return true;
     }
 
@@ -41,6 +42,7 @@ contract Aphelion is ERC20Interface {
             allowed[_from][msg.sender] -= _value;
         }
 
+        emit Transfer(_from, _to, _value);
         return true;
 
     }   
@@ -52,6 +54,7 @@ contract Aphelion is ERC20Interface {
 
     function approve(address _spender, uint _value) public returns (bool success) {
         allowed[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
