@@ -1,7 +1,7 @@
 // Ethereum Request for Comment (ERC) 20 Interface
 // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
 
-pragma solidity 0.5.0;
+pragma solidity 0.4.24;
 
 contract ERC20Interface {
     uint256 public totalSupply;

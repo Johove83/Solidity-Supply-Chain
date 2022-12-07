@@ -1,7 +1,7 @@
 // Implements Ethereum Improvement Proposal (EIP) 20 token standard
 // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
 
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.24;
 
 import './erc20Interface.sol';
 

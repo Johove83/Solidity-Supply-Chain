@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.4.24;
 
 contract supplyChain {
     uint32 public pid = 0;    // Product ID
@@ -70,21 +70,26 @@ contract supplyChain {
         return 0;
     }
 
+    modifier onlyOwner(uint32 _productId) {
+        require(msg.sender == products[_productId].productOwner);
+        _;
+    }
+
     function getProductDetails(uint32 _productId) public view returns (string, string, string, uint32, address, uint32) {
         return (products[_productId].modelNumber, products[_productId].partNumber, 
-                products[_prodcutId].serialNumber, products[_productId].cost,
+                products[_productId].serialNumber, products[_productId].cost,
                 products[_productId].productOwner, products[_productId].mfgTimeStamp);
     }
 
-    function transferToOwner(uint32 _user1Id, uint32 _user2Id, uint32 _prodId) public returns(bool) {
+    function transferToOwner(uint32 _user1Id, uint32 _user2Id, uint32 _prodId) onlyOwner(_prodId) public returns(bool) {
         participant memory p1 = participants[_user1Id];
         participant memory p2 = participants[_user2Id];
         uint32 registration_id = rid++;
 
-        registrations[registration_id].productId = _prodId;
-        registrations[registration_id].productOwner = p2.participantAddress;
-        registrations[registration_id].ownerId = _user2Id;
-        registrations[registration_id].trxTimeStamp = uint32(now);
+        registration[registration_id].productId = _prodId;
+        registration[registration_id].productOwner = p2.participantAddress;
+        registration[registration_id].ownerId = _user2Id;
+        registration[registration_id].trxTimeStamp = uint32(now);
         products[_prodId].productOwner = p2.participantAddress;
         productTrack[_prodId].push(registration_id);
         emit Transfer(_prodId);
@@ -99,7 +104,7 @@ contract supplyChain {
 
     function getRegistrationDetails(uint32 _regId) public view returns (uint32, uint32, address, uint32) {
 
-        registration memory r = registrations[_regId];
+        registration memory r = registration[_regId];
 
         return (r.prodcutId, r.ownerId, r.productOwner, r.trxTimeStamp);
     }
